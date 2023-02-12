@@ -1,10 +1,10 @@
 
 import { Route, Routes } from 'react-router-dom';
-import BoardInsert from './\bBoardInsert';
+import BoardInsert from './Board/BoardInsert';
 
 import './App.css';
-import Board from './Board';
-import BoardView from './BoardView';
+import Board from './Board/Board';
+import BoardView from './Board/BoardView';
 import Home from './Home';
 import Layout from './Layout';
 

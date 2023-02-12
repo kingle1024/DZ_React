@@ -22,12 +22,12 @@ function todoReducer(todos, action){
     }
 }
 
-export default function TodoModel() {
-    console.log("[TodoModel.js] export TodoModel > ");
+export default function BoardModel() {
+    console.log("[BoardModel.js] export BoardModel > ");
     const [todos, dispatch] = useReducer(todoReducer, []);
 
     const onInsert = (title, content) => {
-        console.log("[TodoModel.js] onInsert")
+        console.log("[BoardModel.js] onInsert")
         console.log("title > ",title);
         fetch('/api/board/insert.do',{
             method : 'POST',
@@ -56,7 +56,7 @@ export default function TodoModel() {
     }
 
     const onEdit = (boardDetail, localContent, localTitle) => {
-        console.log("[TodoModel.js] onEdit");
+        console.log("[BoardModel.js] onEdit");
         fetch('/api/board/edit.do', {
             method : 'POST',
             headers : {'Content-Type' : 'application/json; charset=UTF-8'},
@@ -77,11 +77,12 @@ export default function TodoModel() {
                     content : board.content
                 }                
             });
-        });
+            window.location.href="/board/view/"+board.id;
+        });        
     }
 
     const onAppendTodoList = todoList => {
-        console.log("[TodoModel.js] onAppendTodoList")
+        console.log("[BoardModel.js] onAppendTodoList")
         dispatch({type : TODO_ACTION.APPEND_TODO_LIST, todos : todoList});
     }
 
