@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink, Routes } from 'react-router-dom';
 
-const TodoListItem = ({todo}) => {
+const BoardListItem = ({todo}) => {
     const {id, title} = todo;
     console.log("todoListItem");
     console.log(todo);
@@ -19,4 +19,4 @@ const TodoListItem = ({todo}) => {
     );
 };
 
-export default TodoListItem;
+export default BoardListItem;

@@ -1,16 +1,16 @@
 import React, { useCallback } from 'react';
 import { List } from 'react-virtualized';
-import TodoListItem from './TodoListItem';
+import BoardListItem from './BoardListItem';
 
-const TodoList = ({todos}) => {
-    console.log("[TodoList.js] todoList > ");
+const BoardList = ({todos}) => {
+    console.log("[BoardList.js] todoList > ");
     console.log({todos});
     const rowRenderer = useCallback(
         ({index, key}) => {
             const todo = todos[index];
-            console.log("[TodoList.js] rowRender >");
+            console.log("[BoardList.js] rowRender >");
             return (
-                <TodoListItem
+                <BoardListItem
                     todo = {todo}
                     key = {todo.id}
                 />
@@ -33,4 +33,4 @@ const TodoList = ({todos}) => {
     );
 };
 
-export default TodoList;
+export default BoardList;

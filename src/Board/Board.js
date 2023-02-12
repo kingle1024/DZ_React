@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import TodoList from './TodoList';
-import TodoModel from './TodoModel';
+import BoardList from './BoardList';
+import BoardModel from './BoardModel';
 
 const Board = () => {
-    const [todos, onAppendTodoList] = TodoModel();
+    const [todos, onAppendTodoList] = BoardModel();
     console.log("before ");
     console.log(todos);
     
@@ -30,7 +30,7 @@ const Board = () => {
             <p><Link  to='/board/insert'>글쓰기</Link></p>        
             
             <p>리스트</p>
-            <TodoList todos={todos} />  
+            <BoardList todos={todos} />
                       
         </div>
     );

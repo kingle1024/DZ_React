@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import TodoModel from './TodoModel';
+import BoardModel from './BoardModel';
 
 
 const BoardView = ({id}) => {
-    const [todos, onAppendTodoList, onInsert, onEdit, onDelete] = TodoModel();
+    const [todos, onAppendTodoList, onInsert, onEdit, onDelete] = BoardModel();
      
     const [boardDetail, setBoardDetail] = useState([]);
     console.log("boardDetail > ");
@@ -32,7 +32,7 @@ const BoardView = ({id}) => {
     const handleClickEdit = () => {
         if(window.confirm(`수정하시겠습니까?`)){
             onEdit(boardDetail, localContent, localTitle);
-            setIsEditNow(false);            
+            setIsEditNow(false);                        
         }
     }
     const handleClickDelete = () => {
