@@ -4,7 +4,7 @@ import TodoList from './TodoList';
 import TodoModel from './TodoModel';
 
 const Board = () => {
-    const [todos, onInsert, onAppendTodoList] = TodoModel();
+    const [todos, onAppendTodoList] = TodoModel();
     console.log("before ");
     console.log(todos);
     
@@ -18,7 +18,7 @@ const Board = () => {
             console.log(result);
             onAppendTodoList(result.list);
         });
-
+        
         console.log("[Board.js] finish > ");    
         console.log({todos});            
         
