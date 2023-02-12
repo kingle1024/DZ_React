@@ -2,7 +2,9 @@ import { useReducer } from "react";
 
 const TODO_ACTION = {
     INSERT : 2,
-    APPEND_TODO_LIST : 4
+    EDIT : 3,
+    APPEND_TODO_LIST : 4,
+    DELETE : 5
 }
 Object.freeze(TODO_ACTION);
 
@@ -31,7 +33,8 @@ export default function TodoModel() {
             method : 'POST',
             headers : {'Content-Type' : 'application/json; charset=UTF-8'},
             body : JSON.stringify({
-                title : title, content : content
+                title : title, 
+                content : content
             })
         }).then(response => response.json())
         .then(result => {
@@ -52,9 +55,51 @@ export default function TodoModel() {
         });
     }
 
+    const onEdit = (boardDetail, localContent, localTitle) => {
+        console.log("[TodoModel.js] onEdit");
+        fetch('/api/board/edit.do', {
+            method : 'POST',
+            headers : {'Content-Type' : 'application/json; charset=UTF-8'},
+            body : JSON.stringify({
+                id : boardDetail.id,
+                title : localTitle,
+                content : localContent
+            })
+        }).then(response => response.json())
+        .then(result => {
+            console.log(result);
+            const board = result.board;
+            dispatch({
+                type : TODO_ACTION.EDIT,
+                todos : {
+                    id : board.id,
+                    title : board.title,
+                    content : board.content
+                }                
+            });
+        });
+    }
+
     const onAppendTodoList = todoList => {
         console.log("[TodoModel.js] onAppendTodoList")
         dispatch({type : TODO_ACTION.APPEND_TODO_LIST, todos : todoList});
     }
-    return [todos, onInsert, onAppendTodoList];
+
+    const onDelete = id => {
+        if(!window.confirm('삭제하시겠습니까?')) return;
+        
+        fetch('/api/board/delete.do?id='+id, {
+            method : 'get'
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+        });
+
+        dispatch({type : TODO_ACTION.DELETE, id});
+
+        window.location.href = "/board";
+    }
+
+    return [todos, onAppendTodoList, onInsert, onEdit, onDelete];
 }

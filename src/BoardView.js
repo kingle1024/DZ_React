@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { List } from 'react-virtualized';
+import TodoModel from './TodoModel';
 
 
 const BoardView = ({id}) => {
-    // const [onEdit] = BoardModel();
+    const [todos, onAppendTodoList, onInsert, onEdit, onDelete] = TodoModel();
      
     const [boardDetail, setBoardDetail] = useState([]);
+    console.log("boardDetail > ");
+    console.log(boardDetail);
     const params = useParams();    
     const [isEditNow, setIsEditNow] = useState(false);
     
@@ -14,6 +16,7 @@ const BoardView = ({id}) => {
     const [localContent, setLocalContent] = useState(boardDetail.content);        
 
     const localContentRef = useRef(null);
+
     
     useEffect( () => {
         fetch(`/api/board/view/${params.id}`, {
@@ -22,14 +25,18 @@ const BoardView = ({id}) => {
         .then(response => response.json())
         .then(result => {
             console.log(result);        
-            setBoardDetail(result.view);
+            setBoardDetail(result.view);            
         });    
     }, []);        
     
     const handleClickEdit = () => {
         if(window.confirm(`수정하시겠습니까?`)){
-            // onEdit(boardDetail, localContent, localTitle);
+            onEdit(boardDetail, localContent, localTitle);
+            setIsEditNow(false);            
         }
+    }
+    const handleClickDelete = () => {
+        onDelete(boardDetail.id);
     }
     const toggleIsEditNow = () => {
         setIsEditNow(!isEditNow);
@@ -39,7 +46,6 @@ const BoardView = ({id}) => {
     const handleQuitEdit = () => {
         setLocalContent(boardDetail.content);
         setLocalTitle(boardDetail.title);
-
         toggleIsEditNow();
     }    
 
@@ -65,15 +71,17 @@ const BoardView = ({id}) => {
                     <p>{boardDetail.title}</p>
                     <p>{boardDetail.content}</p>
                 </div>
-            )}            
+            )}
 
             {isEditNow ? (
                 <div>
-                    <button onClick={handleQuitEdit}>수정 취소</button>                    
+                    <button onClick={handleQuitEdit}>수정 취소</button>
+                    <button onClick={handleClickEdit}>수정 완료</button>
                 </div>
             ) : (
                 <div>
                     <button onClick={toggleIsEditNow}>수정 하기</button>
+                    <button onClick={handleClickDelete}>삭제 하기</button>
                 </div>
             )}
             
