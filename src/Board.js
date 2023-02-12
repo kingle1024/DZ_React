@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import TodoList from './TodoList';
 import TodoModel from './TodoModel';
 
 const Board = () => {
-    const [todos, onAppendTodoList] = TodoModel();
+    const [todos, onInsert, onAppendTodoList] = TodoModel();
     console.log("before ");
     console.log(todos);
     
@@ -13,22 +14,24 @@ const Board = () => {
         })
         .then(response => response.json())
         .then(result => {
-            console.log("result > ");
+            console.log("[Board.js] result > ");
             console.log(result);
             onAppendTodoList(result.list);
         });
 
-        console.log("finish");    
+        console.log("[Board.js] finish > ");    
         console.log({todos});            
         
     }, []);
 
     return (
         <div>
-            Board
+            Board    
+            <p><Link  to='/board/insert'>글쓰기</Link></p>        
             
-            <TodoList todos={todos} />
-            
+            <p>리스트</p>
+            <TodoList todos={todos} />  
+                      
         </div>
     );
 };
