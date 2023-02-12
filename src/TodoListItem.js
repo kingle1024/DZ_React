@@ -1,12 +1,20 @@
 import React from 'react';
+import { Link, NavLink, Routes } from 'react-router-dom';
 
 const TodoListItem = ({todo}) => {
-    const {title} = todo;
+    const {id, title} = todo;
     console.log("todoListItem");
     console.log(todo);
     return (
-        <div>        
-            <div className='text'>{title}</div>                        
+        <div>                    
+        
+            <NavLink
+                to={`/board/view/${id}`}
+            >
+                {title}        
+            </NavLink>
+            
+                     
         </div>
     );
 };

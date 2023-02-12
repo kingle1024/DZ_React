@@ -3,12 +3,12 @@ import { List } from 'react-virtualized';
 import TodoListItem from './TodoListItem';
 
 const TodoList = ({todos}) => {
-    console.log("todoList > ");
+    console.log("[TodoList.js] todoList > ");
     console.log({todos});
     const rowRenderer = useCallback(
         ({index, key}) => {
             const todo = todos[index];
-            console.log("rowRender >");
+            console.log("[TodoList.js] rowRender >");
             return (
                 <TodoListItem
                     todo = {todo}
