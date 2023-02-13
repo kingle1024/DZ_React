@@ -24,7 +24,6 @@ const Layout = () => {
             <Nav className="me-auto">
                 <Nav.Link href="/">Home</Nav.Link>
                 
-                
                 { isLogin ? (
                     <>
                     <Nav.Link href="/board">게시판</Nav.Link>
@@ -32,7 +31,10 @@ const Layout = () => {
                     <Nav.Link href="/logout"><button className="btn btn-warning btn-xs">로그아웃</button></Nav.Link>
                     </>
                 ) : (
+                    <>
                     <Nav.Link href="/login"><button className="btn btn-warning btn-xs">로그인</button></Nav.Link>
+                    <Nav.Link href="/signup"><button className="btn btn-warning btn-xs">회원가입</button></Nav.Link>
+                    </>
                 )
                 }           
             </Nav>
