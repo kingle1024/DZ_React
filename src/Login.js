@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-
+import Form from "react-bootstrap/Form"; 
+import Button from "react-bootstrap/Button";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 
 const Login = () => {
-    const [userId, setUserId] = useState('');
+    const [userId, setUserId] = useState('exist_testuser');
     const [pwd, setPwd] = useState('');
 
     const inputId = (e) => {
@@ -13,8 +17,9 @@ const Login = () => {
         setPwd(e.target.value);
     }
 
-    const login = () => {
-        fetch("/api/member/login", {
+    const login = (e) => {
+        e.preventDefault();
+        fetch("/login", {
             method : 'POST',
             headers : {'Content-Type' : 'application/json; charset=UTF-8'},
             body : JSON.stringify({
@@ -22,29 +27,57 @@ const Login = () => {
                 pwd : pwd
             })
         })
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
+        // .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            if(response.status){
+                localStorage.setItem("Authorization", response.headers.get("Authorization"));
+                localStorage.setItem("RefreshToken", response.headers.get("RefreshToken"));
+                localStorage.setItem("Authoization_TIME", response.headers.get("Authoization_TIME"));
+                window.location.href ='/';
+            }else{
+                alert('error');
+            }
+            
         })
     }
     
 
     return (
         <div>
-           로그인 <br/>
-           아이디 
-           <input 
-            value={userId}
-            onChange={inputId}
-           /><br/>
+        
+        <Container className="panel">
+            <h3>로그인</h3> 
+            <h3>exist_testuser</h3>
+            <Form onSubmit={login}>
+                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                    <Col sm>                        
+                        <Form.Control                                                         
+                            placeholder="UserID" 
+                            // onChange={inputId}
+                            autoFocus
+                        />
+                    </Col>
+                </Form.Group>
 
-           패스워드
-           <input 
-            value={pwd}
-            onChange={inputPwd}
-           /><br/>
-           
-           <button onClick={() => login()}>로그인</button>
+                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                    <Col sm>
+                        <Form.Control 
+                            type="password" 
+                            placeholder="Password" 
+                            
+                        />
+                    </Col>
+                </Form.Group>
+                <br/>
+
+                <div className="d-grid gap-1">
+                    <Button variant="secondary" type="submit" >
+                        Sign In
+                    </Button>
+                </div>
+            </Form>
+        </Container>
         </div>
     );
 };

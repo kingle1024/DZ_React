@@ -5,23 +5,41 @@ import BoardInsert from './Board/BoardInsert';
 import './App.css';
 import Board from './Board/Board';
 import BoardView from './Board/BoardView';
+import SignUp from './Member/SignUp';
 import Home from './Home';
 import Layout from './Layout';
+import Login from './Login';
+import MyPage from './Member/MyPage';
+import 'bootstrap/dist/css/bootstrap.css';
+import LoginValid from './LoginValid';
+import Logout from './Logout';
 
 
 function App() {
   
   return (
-    <Routes>
-        <Route element = {<Layout /> } >
-          <Route index element={<Home />} />
-          <Route path='/board' element={<Board />} />
-          <Route path='/board/view/:id' element={<BoardView />} />
-          <Route path='/board/insert' element={<BoardInsert />} />
+    <div>
+    <Routes>      
+        <Route element = {<Layout />}>
+          <Route path='/' >                              
+            <Route path='/login' element = {<Login />} />
+            <Route path='/logout' element = {<Logout />} />
+          </Route>
+
+          <Route path="/" element = {<LoginValid /> } >
+            {/* <Route index element={<Home />} />           */}
+            {/* <Route path="/" element = {<Layout /> } /> */}
+            <Route path='/board' element={<Board />} />
+            <Route path='/board/view/:id' element={<BoardView />} />
+            <Route path='/board/insert' element={<BoardInsert />} />
+            <Route path='/member/signup' element={<SignUp />} />
+            <Route path='/member/info' element={<MyPage />} />
+          </Route>
         </Route>
+        
+                
     </Routes>
-    
-    
+    </div>
   );
 }
 
