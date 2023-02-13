@@ -8,7 +8,7 @@ const BoardListItem = ({todo}) => {
     return (
         <div>                    
         
-            <NavLink
+            제목 : <NavLink
                 to={`/board/view/${id}`}
             >
                 {title}        
