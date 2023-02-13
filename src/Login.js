@@ -30,15 +30,16 @@ const Login = () => {
         // .then(response => response.json())
         .then(response => {
             console.log(response);
-            if(response.status){
-                localStorage.setItem("Authorization", response.headers.get("Authorization"));
+            const authorization = response.headers.get("Authorization");
+
+            if(authorization.length > 1){
+                localStorage.setItem("Authorization", authorization);
                 localStorage.setItem("RefreshToken", response.headers.get("RefreshToken"));
                 localStorage.setItem("Authoization_TIME", response.headers.get("Authoization_TIME"));
                 window.location.href ='/';
             }else{
                 alert('error');
             }
-            
         })
     }
     
@@ -54,7 +55,7 @@ const Login = () => {
                     <Col sm>                        
                         <Form.Control                                                         
                             placeholder="UserID" 
-                            // onChange={inputId}
+                            onChange={inputId}
                             autoFocus
                         />
                     </Col>
@@ -64,6 +65,7 @@ const Login = () => {
                     <Col sm>
                         <Form.Control 
                             type="password" 
+                            onChange={inputPwd}
                             placeholder="Password" 
                             
                         />
