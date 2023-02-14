@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import BoardList from './BoardList';
 import BoardModel from './BoardModel';
+import Table from 'react-bootstrap/Table';
+import Row from 'react-bootstrap/Row';
 
 const Board = () => {
     const [todos, onAppendTodoList] = BoardModel();
-    console.log("before ");
-    console.log(todos);
     
     useEffect( () => {
         fetch("/api/board/list", {
@@ -14,25 +14,27 @@ const Board = () => {
         })
         .then(response => response.json())
         .then(result => {
-            console.log("[Board.js] result > ");
-            console.log(result);
             onAppendTodoList(result.list);
         });
-        
-        console.log("[Board.js] finish > ");    
-        console.log({todos});            
         
     }, []);
 
     return (
-        <div>
-            Board    
-            <p><Link  to='/board/insert'>글쓰기</Link></p>        
-            
-            <p>리스트</p>
-            <BoardList todos={todos} />
-                      
-        </div>
+        <>            
+            <h1>게시판</h1>
+            <p className="text-end"><Link to='/board/insert'>글쓰기</Link></p>        
+            <Row>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>제목</th>
+                    </tr>
+                </thead>                
+                <BoardList todos={todos} />
+            </Table>   
+            </Row>
+        </>
     );
 };
 

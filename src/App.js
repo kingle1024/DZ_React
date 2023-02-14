@@ -12,6 +12,7 @@ import MyPage from './Member/MyPage';
 import 'bootstrap/dist/css/bootstrap.css';
 import LoginValid from './LoginValid';
 import Logout from './Logout';
+import Home from './Home';
 
 function App() {
   
@@ -19,15 +20,14 @@ function App() {
     <div>
     <Routes>      
         <Route element = {<Layout />}>
-          <Route path='/' >                              
+          <Route path='/' >                                          
             <Route path='/login' element = {<Login />} />
             <Route path='/logout' element = {<Logout />} />
             <Route path='/signup' element={<SignUp />} />
           </Route>
 
           <Route path="/" element = {<LoginValid /> } >
-            {/* <Route index element={<Home />} />           */}
-            {/* <Route path="/" element = {<Layout /> } /> */}
+            <Route index element={<Home />} />
             <Route path='/board' element={<Board />} />
             <Route path='/board/view/:id' element={<BoardView />} />
             <Route path='/board/insert' element={<BoardInsert />} />

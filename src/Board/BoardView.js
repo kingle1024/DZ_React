@@ -1,17 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import BoardModel from './BoardModel';
-
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 const BoardView = ({id}) => {
     const [todos, onAppendTodoList, onInsert, onEdit, onDelete] = BoardModel();
      
     const [boardDetail, setBoardDetail] = useState([]);
-    console.log("boardDetail > ");
-    console.log(boardDetail);
     const params = useParams();    
-    const [isEditNow, setIsEditNow] = useState(false);
-    
+    const [isEditNow, setIsEditNow] = useState(false);    
     const [localTitle, setLocalTitle] = useState(boardDetail.title);
     const [localContent, setLocalContent] = useState(boardDetail.content);        
 
@@ -24,7 +22,6 @@ const BoardView = ({id}) => {
         })
         .then(response => response.json())
         .then(result => {
-            console.log(result);        
             setBoardDetail(result.view);            
         });    
     }, []);        
@@ -50,42 +47,68 @@ const BoardView = ({id}) => {
     }    
 
     return (
-        <div>
-            <h3>BoardView</h3>
-            <Link to='/board'><button>목록</button></Link>
+        <>
+            <h1>게시글 상세보기</h1>
             
+            <p className="text-end"><Link to='/board'>목록</Link></p>
+            
+            <Table striped bordered hover>
             {isEditNow ? (
-                <div>                
-                    <input
-                        value={localTitle}
-                        onChange={(e) => setLocalTitle(e.target.value)}
-                    /><br/>
+                <>
+                <tr>                
+                    <td width={180}>제목</td>
+                    <td>
+                        <input
+                            value={localTitle}
+                            onChange={(e) => setLocalTitle(e.target.value)}
+                        />
+                    </td>
+                </tr>
+                <tr>                 
+                    <td>내용</td>   
+                    <td>
                     <textarea        
                         ref={localContentRef}                
                         value={localContent}
                         onChange={(e) => setLocalContent(e.target.value)}
                     />
-                </div>
+                    </td>
+                </tr>
+                </>
             ) : (
-                <div>
-                    <p>{boardDetail.title}</p>
-                    <p>{boardDetail.content}</p>
-                </div>
-            )}
-
-            {isEditNow ? (
-                <div>
-                    <button onClick={handleQuitEdit}>수정 취소</button>
-                    <button onClick={handleClickEdit}>수정 완료</button>
-                </div>
-            ) : (
-                <div>
-                    <button onClick={toggleIsEditNow}>수정 하기</button>
-                    <button onClick={handleClickDelete}>삭제 하기</button>
-                </div>
+                <>
+                    <tr>
+                        <th width={180}>제목</th>
+                        <td>{boardDetail.title}</td>
+                    </tr>
+                    <tr>
+                        <th >내용</th>
+                        <td>{boardDetail.content}</td>
+                    </tr>
+                </>
             )}
             
-        </div>
+            
+
+            {isEditNow ? (
+                <div className="text-end">
+                    <br/>
+                    
+                    <Button onClick={handleQuitEdit}>수정 취소</Button>&nbsp;
+                    <Button onClick={handleClickEdit}>수정 완료</Button>
+                    
+                </div>
+            ) : (
+                <div className="text-end">
+                    <br/>
+                    
+                    <Button variant="primary" onClick={toggleIsEditNow}>수정 하기</Button>&nbsp;
+                    <Button variant="danger" onClick={handleClickDelete}>삭제 하기</Button>
+                    
+                </div>
+            )}
+            </Table>
+        </>
     );
 };
 
