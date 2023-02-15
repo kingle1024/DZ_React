@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import BoardModel from './BoardModel';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 const BoardView = ({id}) => {
     const [todos, onAppendTodoList, onInsert, onEdit, onDelete] = BoardModel();
@@ -29,7 +31,7 @@ const BoardView = ({id}) => {
     const handleClickEdit = () => {
         if(window.confirm(`수정하시겠습니까?`)){
             onEdit(boardDetail, localContent, localTitle);
-            setIsEditNow(false);                        
+            setIsEditNow(false);                             
         }
     }
     const handleClickDelete = () => {
@@ -52,26 +54,34 @@ const BoardView = ({id}) => {
             
             <p className="text-end"><Link to='/board'>목록</Link></p>
             
-            <Table striped bordered hover>
+            <Table bordered hover>
+                <thead></thead>
+                <tbody>
             {isEditNow ? (
                 <>
                 <tr>                
                     <td width={180}>제목</td>
-                    <td>
-                        <input
+                    <td>                        
+                        <Form.Control 
+                            aria-label="Dollar amount (with dot and two decimal places)" 
                             value={localTitle}
-                            onChange={(e) => setLocalTitle(e.target.value)}
+                            onChange={(e) => setLocalTitle(e.target.value)}                            
                         />
                     </td>
                 </tr>
                 <tr>                 
                     <td>내용</td>   
                     <td>
-                    <textarea        
+                    <FloatingLabel controlId="floatingTextarea2" label="글 내용">
+                        <Form.Control
+                        as="textarea"
+                        placeholder="Leave a comment here"
+                        style={{ height: '100px' }}
                         ref={localContentRef}                
                         value={localContent}
-                        onChange={(e) => setLocalContent(e.target.value)}
-                    />
+                        onChange={(e) => setLocalContent(e.target.value)} 
+                        />
+                    </FloatingLabel>
                     </td>
                 </tr>
                 </>
@@ -87,14 +97,14 @@ const BoardView = ({id}) => {
                     </tr>
                 </>
             )}
-            
-            
+            </tbody>
+            </Table>
 
             {isEditNow ? (
                 <div className="text-end">
                     <br/>
                     
-                    <Button onClick={handleQuitEdit}>수정 취소</Button>&nbsp;
+                    <Button variant="secondary" onClick={handleQuitEdit}>수정 취소</Button>&nbsp;
                     <Button onClick={handleClickEdit}>수정 완료</Button>
                     
                 </div>
@@ -107,7 +117,8 @@ const BoardView = ({id}) => {
                     
                 </div>
             )}
-            </Table>
+            
+            
         </>
     );
 };

@@ -1,21 +1,21 @@
 import React from 'react';
 import { Link, NavLink, Routes } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
 
-const BoardListItem = ({todo}) => {
-    const {id, title} = todo;
-    console.log("todoListItem");
-    console.log(todo);
-    return (
-        <div>                    
-        
-            제목 : <NavLink
-                to={`/board/view/${id}`}
-            >
-                {title}        
-            </NavLink>
-            
-                     
-        </div>
+
+const BoardListItem = ({todo, style}) => {
+
+    return (        
+        <>
+        <tr>
+            <td>{todo.id}</td>
+            <td>
+                <NavLink to={`/board/view/${todo.id}`}>
+                    {todo.title}        
+                </NavLink>
+            </td>                        
+        </tr> 
+        </>
     );
 };
 

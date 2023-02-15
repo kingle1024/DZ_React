@@ -77,6 +77,7 @@ export default function BoardModel() {
                     content : board.content
                 }                
             });
+            alert('수정 완료');
             window.location.href="/board/view/"+board.id;
         });        
     }
