@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import BoardList from './BoardList';
 import BoardModel from './BoardModel';
 import Table from 'react-bootstrap/Table';
-import Row from 'react-bootstrap/Row';
 
 const Board = () => {
     const [todos, onAppendTodoList] = BoardModel();
@@ -23,17 +22,9 @@ const Board = () => {
         <>            
             <h1>게시판</h1>
             <p className="text-end"><Link to='/board/insert'>글쓰기</Link></p>        
-            <Row>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>제목</th>
-                    </tr>
-                </thead>                
+            <Table striped bordered hover>                               
                 <BoardList todos={todos} />
             </Table>   
-            </Row>
         </>
     );
 };
